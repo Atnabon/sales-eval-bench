@@ -1,0 +1,58 @@
+# Routed multi-LLM pipeline configuration.
+#
+# Two non-negotiable rules from the challenge brief, encoded here:
+#   1. Eval-tier model is used only on the sealed held-out, and only for the
+#      Day-6 ablation passes. Never on Days 2-3 authoring iteration.
+#   2. The model that *generates* a task must NOT be the model that *judges*
+#      that same task — preference-leakage prevention (Li et al., 2025).
+#      The router enforces this by tagging each row with `authoring_model`
+#      and `judge_model` and refusing to route a task to a judge whose
+#      family matches the authoring family.
+
+frontier_seed:
+  # Used only for the 30-50 hardest seeds, anchored to the Week 10 failure
+  # taxonomy. Sealed-slice scoring also uses one of these on Day 6.
+  primary: anthropic/claude-sonnet-4.6
+  alternate: openai/gpt-5
+  daily_call_cap: 30
+  budget_envelope_usd: 2.50
+
+dev_tier_bulk:
+  # Iteration during dataset authoring. Generates programmatic and multi-LLM
+  # bulk variants. Cap per-call cost; log every charge to cost_log.md.
+  primary: qwen/qwen3-next-80b-a3b
+  alternate: deepseek/deepseek-v3.2
+  daily_call_cap: 500
+  budget_envelope_usd: 4.00
+
+dev_tier_judge:
+  # Filters every generated task on input_coherence / verifiability /
+  # rubric_clarity. Different family from authoring model on the row.
+  primary: qwen/qwen3-next-80b-a3b
+  alternate: deepseek/deepseek-v3.2
+  pointwise_thresholds:
+    input_coherence: 4
+    ground_truth_verifiability: 4
+    rubric_application_clarity: 4
+  pairwise_tiebreak: true
+
+leakage_prevention:
+  # When generating preference pairs, chosen and rejected must come from
+  # different families. The list below is the canonical family map.
+  family_map:
+    anthropic: [claude-sonnet-4.6, claude-haiku-4.5]
+    openai: [gpt-5, gpt-4o]
+    qwen: [qwen3-next-80b-a3b, qwen-2.5-72b]
+    deepseek: [deepseek-v3.2, deepseek-coder]
+  forbidden_pairs: []  # populated dynamically by judge_filter.py
+
+rotation_policy:
+  description: |
+    For each batch of 50 generated tasks, the router rotates authoring model
+    across families to avoid any single family dominating the corpus. The
+    rotation is logged to cost_log.md and surfaced in the dataset metadata.
+  family_share_target:
+    qwen: 0.40
+    deepseek: 0.30
+    anthropic: 0.20
+    openai: 0.10
