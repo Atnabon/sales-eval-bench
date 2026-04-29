@@ -39,6 +39,31 @@ DEFAULT_WEIGHTS = {
     "structural": 0.15,
 }
 
+# ---------------------------------------------------------------------------
+# Score calibration guide (what raw 0.0 / 0.5 / 1.0 means per dimension)
+# ---------------------------------------------------------------------------
+# banned_phrases  raw=1.0  → zero hits from the task's banned-phrase list
+#                 raw=0.75 → one hit (−0.25 per hit, floored at 0)
+#                 raw=0.5  → two hits
+#                 raw=0.0  → four or more hits
+#
+# grounding       raw=1.0  → all required_grounding facts present and, where
+#                            must_be_asked_not_asserted_when_low_confidence=True
+#                            and confidence is LOW, rendered as a question
+#                 raw=0.5  → half of required facts satisfied (e.g. 1/2)
+#                 raw=0.0  → no required facts present in candidate
+#
+# tone            raw=1.0  → LLM judge scores every marker 5/5
+#  (LLM 1-5)      raw=0.6  → markers average 3/5 (acceptable but not polished)
+#                 raw=0.0  → all markers score 1/5 (systematic style violations)
+#
+# structural      raw=1.0  → all structural checks pass
+#  (deterministic) raw=0.5  → half of checks pass (e.g. calendar link present
+#                             but word count exceeded)
+#                 raw=0.0  → all checks fail (no calendar link, word cap blown,
+#                             founder-departure not paused when required)
+# ---------------------------------------------------------------------------
+
 
 # ----------------------------------------------------------------------------
 # Task loading
