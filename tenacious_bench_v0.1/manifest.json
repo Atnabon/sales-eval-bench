@@ -1,0 +1,55 @@
+{
+  "name": "tenacious-bench",
+  "version": "v0.1.0-interim",
+  "license": "CC-BY-4.0",
+  "license_rationale": "Permissive reuse for derivative bench work; attribution to Tenacious style guide and Atnabon (TRP1 Week 11). See methodology.md#license.",
+  "schema": "../schema.json",
+  "scoring_evaluator": "../evaluator/scoring_evaluator.py",
+  "datasheet": "../datasheet.md",
+  "partitions": {
+    "train": {
+      "path": "train/tasks.jsonl",
+      "count": 24,
+      "share": 0.50
+    },
+    "dev": {
+      "path": "dev/tasks.jsonl",
+      "count": 12,
+      "share": 0.30
+    },
+    "held_out": {
+      "path": "held_out/tasks.encrypted.placeholder",
+      "count": 8,
+      "share": 0.20,
+      "sealed": true,
+      "release_policy": "Tasks remain sealed until the leaderboard is published in Act V. The unsealed JSONL is gitignored and stored encrypted; SHA256 of the unsealed file is committed."
+    }
+  },
+  "dimensions": [
+    "signal_overclaiming",
+    "bench_overcommitment",
+    "tone_marker_adherence",
+    "gap_brief_overclaiming",
+    "icp_classification",
+    "scheduling_edge_case",
+    "signal_staleness",
+    "dual_control_handoff",
+    "founder_departure_pause",
+    "multi_thread_isolation",
+    "cost_discipline"
+  ],
+  "source_modes": {
+    "trace_derived": 0.30,
+    "programmatic_sweep": 0.30,
+    "multi_llm_synthesis": 0.25,
+    "hand_authored_adversarial": 0.15
+  },
+  "model_routes_used": [
+    "anthropic/claude-sonnet-4.6 (frontier seeding, sealed-slice scoring only)",
+    "openai/gpt-5 (frontier seeding alternate)",
+    "qwen/qwen3-next-80b-a3b (dev-tier bulk variants + dev-tier judge)",
+    "deepseek/deepseek-v3.2 (dev-tier bulk variants alternate, preference-leakage-prevention pair to qwen)"
+  ],
+  "contamination_check": "contamination_check.json",
+  "interim_note": "v0.1.0-interim ships 44 hand-curated representative tasks (12 trace-derived, 13 programmatic, 11 multi-LLM, 8 hand-authored-adversarial) covering all 11 dimensions. v0.1.0 final will scale to 240 via the pipeline at generation_scripts/."
+}
