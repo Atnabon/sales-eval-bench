@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://huggingface.co/datasets/atnabon/tenacious-bench/schema/v0.1.json",
+  "title": "Tenacious-Bench Task Schema v0.1",
+  "description": "Machine-verifiable evaluation task for the Tenacious Conversion Engine. Every task is graded by scoring_evaluator.py with no human in the loop.",
+  "type": "object",
+  "required": [
+    "task_id",
+    "dimension",
+    "source_mode",
+    "difficulty",
+    "input",
+    "rubric",
+    "ground_truth",
+    "metadata"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "pattern": "^TB-(TRAIN|DEV|HELDOUT)-[0-9]{3}$",
+      "description": "Stable identifier. TB- prefix, partition tag, three-digit sequence."
+    },
+    "dimension": {
+      "type": "string",
+      "enum": [
+        "signal_overclaiming",
+        "bench_overcommitment",
+        "tone_marker_adherence",
+        "gap_brief_overclaiming",
+        "icp_classification",
+        "scheduling_edge_case",
+        "signal_staleness",
+        "dual_control_handoff",
+        "founder_departure_pause",
+        "multi_thread_isolation",
+        "cost_discipline"
+      ]
+    },
+    "source_mode": {
+      "type": "string",
+      "enum": [
+        "trace_derived",
+        "programmatic_sweep",
+        "multi_llm_synthesis",
+        "hand_authored_adversarial"
+      ]
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "medium", "hard", "adversarial"]
+    },
+    "input": {
+      "type": "object",
+      "required": ["instruction"],
+      "properties": {
+        "instruction": {
+          "type": "string",
+          "description": "What the agent is asked to produce — usually 'draft an outreach email to this prospect'."
+        },
+        "hiring_signal_brief": {
+          "type": "object",
+          "description": "Mirrors the Week 10 HiringSignalBrief shape; nullable when probing empty-brief behavior.",
+          "properties": {
+            "company": {"type": "string"},
+            "segment": {"type": "string"},
+            "ai_maturity": {
+              "type": "object",
+              "properties": {
+                "score": {"type": "number"},
+                "confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]}
+              }
+            },
+            "funding": {
+              "type": "object",
+              "properties": {
+                "round": {"type": "string"},
+                "amount_usd": {"type": ["number", "null"]},
+                "discovered_at": {"type": "string", "format": "date"},
+                "confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]}
+              }
+            },
+            "hiring": {
+              "type": "object",
+              "properties": {
+                "open_eng_roles": {"type": "integer"},
+                "ai_adjacent_eng_roles": {"type": "integer"},
+                "confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]}
+              }
+            },
+            "layoffs": {
+              "type": "object",
+              "properties": {
+                "event": {"type": "boolean"},
+                "pct": {"type": ["number", "null"]},
+                "discovered_at": {"type": ["string", "null"], "format": "date"}
+              }
+            }
+          }
+        },
+        "competitor_gap_brief": {
+          "type": "object",
+          "properties": {
+            "gaps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "claim": {"type": "string"},
+                  "confidence": {"enum": ["LOW", "MEDIUM", "HIGH"]},
+                  "prospect_has_it": {"type": ["boolean", "null"]}
+                }
+              }
+            }
+          }
+        },
+        "bench_summary": {
+          "type": "object",
+          "properties": {
+            "available_stacks": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "headcount_by_stack": {
+              "type": "object",
+              "additionalProperties": {"type": "integer"}
+            }
+          }
+        },
+        "prospect": {
+          "type": "object",
+          "properties": {
+            "timezone": {"type": ["string", "null"]},
+            "thread_id": {"type": "string"}
+          }
+        },
+        "prior_thread": {
+          "type": "array",
+          "items": {"type": "object"}
+        }
+      }
+    },
+    "rubric": {
+      "type": "object",
+      "required": ["banned_phrases", "required_grounding", "tone_markers", "structural"],
+      "properties": {
+        "banned_phrases": {
+          "type": "array",
+          "description": "Substring matches that disqualify the candidate. Drawn from probe library and style guide v2.",
+          "items": {"type": "string"}
+        },
+        "required_grounding": {
+          "type": "array",
+          "description": "Each entry must appear in the candidate's referenced facts list.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "fact_key": {"type": "string"},
+              "expected_value": {"type": "string"},
+              "must_be_asked_not_asserted_when_low_confidence": {"type": "boolean"}
+            }
+          }
+        },
+        "tone_markers": {
+          "type": "array",
+          "description": "Five Tenacious style-guide markers per Style Guide v2: Direct, Grounded, Honest, Professional, Non-condescending. LLM-judge scores each 1–5.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "direct",
+              "grounded",
+              "honest",
+              "professional",
+              "non_condescending"
+            ]
+          }
+        },
+        "structural": {
+          "type": "object",
+          "properties": {
+            "must_end_with_calendar_link_or_handoff": {"type": "boolean"},
+            "must_omit_proposed_times_when_timezone_null": {"type": "boolean"},
+            "max_word_count": {"type": "integer"},
+            "must_pause_on_founder_departure": {"type": "boolean"}
+          }
+        },
+        "scoring_weights": {
+          "type": "object",
+          "description": "Sum to 1.0. Defaults documented in evaluator/scoring_evaluator.py.",
+          "properties": {
+            "banned_phrases": {"type": "number"},
+            "grounding": {"type": "number"},
+            "tone": {"type": "number"},
+            "structural": {"type": "number"}
+          }
+        }
+      }
+    },
+    "ground_truth": {
+      "type": "object",
+      "description": "What a Tenacious-aligned agent should do. May include a reference candidate (chosen example) for preference data.",
+      "properties": {
+        "expected_action": {
+          "type": "string",
+          "enum": ["draft_email", "abstain", "request_human_review", "request_more_signal"]
+        },
+        "reference_chosen": {
+          "type": ["string", "null"],
+          "description": "A known-good output, sourced per metadata.chosen_source_model."
+        },
+        "reference_rejected": {
+          "type": ["string", "null"],
+          "description": "A known-bad output that triggers banned_phrases or violates required_grounding."
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["created_at", "authoring_model", "judge_filter_score"],
+      "properties": {
+        "created_at": {"type": "string", "format": "date-time"},
+        "authoring_model": {
+          "type": "string",
+          "description": "Model that produced the seed. Logged for preference-leakage prevention."
+        },
+        "chosen_source_model": {"type": ["string", "null"]},
+        "rejected_source_model": {"type": ["string", "null"]},
+        "judge_model": {"type": "string"},
+        "judge_filter_score": {
+          "type": "object",
+          "properties": {
+            "input_coherence": {"type": "integer", "minimum": 1, "maximum": 5},
+            "ground_truth_verifiability": {"type": "integer", "minimum": 1, "maximum": 5},
+            "rubric_application_clarity": {"type": "integer", "minimum": 1, "maximum": 5}
+          }
+        },
+        "week10_provenance": {
+          "type": "object",
+          "properties": {
+            "trace_ids": {"type": "array", "items": {"type": "string"}},
+            "probe_ids": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "signal_window_start": {"type": "string", "format": "date"},
+        "signal_window_end": {"type": "string", "format": "date"}
+      }
+    }
+  }
+}
