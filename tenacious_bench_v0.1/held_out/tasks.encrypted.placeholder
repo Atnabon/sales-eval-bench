@@ -1,0 +1,9 @@
+# PLACEHOLDER
+
+This file is a placeholder for the AES-256-GCM-encrypted held-out partition.
+Real encryption will be applied by `generation_scripts/seal_held_out.py`
+during the final run on Day 7. Until then, the unsealed JSONL lives in
+`held_out/tasks.jsonl.local` (gitignored) on the trainee's local machine.
+
+Run `python generation_scripts/verify_held_out_seal.py` to verify the
+sha256 of the locally-unsealed file matches `tasks.sha256`.
