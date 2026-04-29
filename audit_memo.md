@@ -81,7 +81,7 @@ remains the **informational** ceiling check. The audit replaces it as the
 *primary* benchmark only for Tenacious deployment decisions, per the cost
 discipline in the challenge brief.
 
-**Probes cited (≥8):** P007, P008, P012, P013, P014, P015, P017, P023, P024,
-P025, P031, P032, P034. **Trace IDs cited (≥5):**
-`tr_dev_baseline_…task07_t2`, `…task19_t1`, `…task23_t4`, `…task41_t3`,
-`…task58_t1`.
+**Probes cited (≥8):** P007, P008, P012, P013, P014, P015, P016, P017,
+P023, P024, P025, P031, P032, P034. (14 total) **Trace IDs cited (≥5):**
+`tr_dev_baseline_20260423_171204_task07_t2`, `…task19_t1`, `…task23_t4`,
+`…task41_t3`, `…task58_t1`. (5 total)
