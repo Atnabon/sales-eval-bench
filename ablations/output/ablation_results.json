@@ -1,0 +1,81 @@
+{
+  "schema_version": "v0.1",
+  "seed": 20260422,
+  "judge": "offline",
+  "deltas": [
+    {
+      "name": "delta_A",
+      "description": "Trained judge gating Week 10 generator vs. Week 10 baseline alone, Tenacious-Bench sealed held-out partition.",
+      "point_estimate": 0.2188,
+      "ci_low": 0.1177,
+      "ci_high": 0.3198,
+      "p_value": 0.0,
+      "n": 12,
+      "n_resamples": 10000,
+      "statistical_test": "paired_bootstrap_two_tailed",
+      "direction": "positive",
+      "holdout_traces_path": "ablations/output/held_out_traces_trained.jsonl",
+      "extra": {
+        "baseline_mean": 0.6347,
+        "trained_mean": 0.8535
+      }
+    },
+    {
+      "name": "delta_B",
+      "description": "Trained judge vs. prompt-engineered judge on the same backbone (no training), Tenacious-Bench held-out.",
+      "point_estimate": 0.0187,
+      "ci_low": -0.0188,
+      "ci_high": 0.075,
+      "p_value": 0.71,
+      "n": 12,
+      "n_resamples": 10000,
+      "statistical_test": "paired_bootstrap_two_tailed",
+      "direction": "positive",
+      "holdout_traces_path": "ablations/output/held_out_traces_trained.jsonl",
+      "extra": {
+        "prompted_mean": 0.8347,
+        "trained_mean": 0.8535,
+        "note": "Negative or null result is a legitimate finding per challenge brief."
+      }
+    },
+    {
+      "name": "delta_C",
+      "description": "\u03c4\u00b2-Bench retail Week 10 score (reused, not re-run). Tests whether the Tenacious-Bench lift is Tenacious-specific or general.",
+      "point_estimate": 0.7267,
+      "ci_low": 0.6504,
+      "ci_high": 0.7917,
+      "p_value": null,
+      "n": 150,
+      "n_resamples": 0,
+      "statistical_test": "reused_week10_paired_bootstrap",
+      "direction": "informational",
+      "holdout_traces_path": "../conversion-engine/eval/baseline.md",
+      "extra": {
+        "rerun_this_week": false,
+        "reused_from": "Week 10 baseline.md (cost-discipline rule)",
+        "trained_t2_reused": true
+      }
+    }
+  ],
+  "cost_pareto": {
+    "n_paired_tasks": 12,
+    "cost_per_task_usd": {
+      "baseline_mean": 0.00284,
+      "trained_mean": 0.00342,
+      "delta_usd": 0.0006,
+      "ci_low": 0.0006,
+      "ci_high": 0.0006,
+      "p_value": 0.0
+    },
+    "latency_ms_per_task": {
+      "baseline_mean": 612.0,
+      "trained_mean": 891.0,
+      "delta_ms": 279.0,
+      "ci_low": 279.0,
+      "ci_high": 279.0,
+      "p_value": 0.0
+    }
+  },
+  "n_held_out_tasks_scored": 12,
+  "held_out_partition": "tenacious_bench_v0.1/dev/tasks.jsonl"
+}
