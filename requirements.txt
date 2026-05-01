@@ -1,0 +1,34 @@
+# Tenacious-Bench v0.1 — pinned dependencies
+#
+# Install with:
+#   python -m pip install -r requirements.txt
+#
+# The training-only deps (unsloth, trl, peft, accelerate, bitsandbytes,
+# datasets) are heavy and only needed on Colab/RunPod for Acts III–IV.
+# Mark them optional via --extra so a stranger can clone, score, and
+# reproduce the contamination report without GPU deps.
+
+# --- Core (required by the evaluator, generation, ablation harness) ---
+httpx==0.27.2
+pyyaml==6.0.2
+sentence-transformers==3.0.1
+numpy==2.0.2
+rapidfuzz==3.9.7
+
+# --- Dataset tooling ---
+datasets==2.21.0
+
+# --- Training stack (Colab T4 / RunPod 4090) ---
+# Do not install on macOS for local repro — these wheels target CUDA only.
+# unsloth @ git+https://github.com/unslothai/unsloth.git
+# trl==0.11.4
+# peft==0.13.2
+# accelerate==1.0.1
+# bitsandbytes==0.44.1
+# torch>=2.4.0
+
+# --- Optional: HF publication ---
+huggingface-hub==0.24.7
+
+# --- Test / dev ---
+pytest==8.3.3
