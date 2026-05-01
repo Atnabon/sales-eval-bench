@@ -1,0 +1,31 @@
+.env
+.env.*
+!.env.example
+# Environment secrets
+.env
+
+# Sealed held-out data (never public until leaderboard released)
+dataset/held_out/
+
+# Model weights (too large)
+*.bin
+*.safetensors
+*.pt
+
+# Publish only the final LoRA adapter artifacts from Phase 4
+training/adapter/checkpoint-*/
+training/adapter/tokenizer*
+training/adapter/chat_template.jinja
+training/adapter/README.md
+!training/adapter/adapter_config.json
+!training/adapter/adapter_model.safetensors
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.pyc
+
+
+
