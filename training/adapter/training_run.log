@@ -1,0 +1,34 @@
+# Tenacious-Bench Path B SimPO run
+# seed = 20260422
+# hparams = {
+  "backbone": "Qwen/Qwen2.5-1.5B-Instruct",
+  "backbone_revision": "9c1c9d80",
+  "max_seq_length": 2048,
+  "lora_r": 16,
+  "lora_alpha": 16,
+  "lora_dropout": 0.0,
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "per_device_train_batch_size": 2,
+  "gradient_accumulation_steps": 4,
+  "num_train_epochs": 3,
+  "learning_rate": 5e-06,
+  "warmup_steps": 5,
+  "lr_scheduler_type": "cosine",
+  "weight_decay": 0.0,
+  "logging_steps": 1,
+  "eval_strategy": "steps",
+  "eval_steps": 10,
+  "simpo_beta": 2.0,
+  "simpo_gamma_beta_ratio": 0.5,
+  "seed": 20260422,
+  "use_unsloth": true
+}
+# history = 30 log records
