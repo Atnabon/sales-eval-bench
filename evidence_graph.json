@@ -1,0 +1,102 @@
+{
+  "schema_version": "v0.1",
+  "description": "Maps every numeric claim in FINAL_REPORT.md, model_card.md, and the blog post back to its source: a dataset task ID, a training-run log entry, an ablation-table row, or a public source. The evidence-graph integrity observable in the challenge brief is enforced by this file.",
+  "claims": [
+    {
+      "claim": "Tenacious-Bench held-out lift Δ = +0.2188",
+      "where_used": ["FINAL_REPORT.md#executive-summary", "model_card.md#4.1", "blog_post#headline-result"],
+      "source": "ablations/output/ablation_results.json#deltas[0].point_estimate",
+      "source_kind": "ablation_table_row"
+    },
+    {
+      "claim": "Delta A 95 % CI [+0.1177, +0.3198]",
+      "where_used": ["FINAL_REPORT.md#executive-summary", "model_card.md#4.1"],
+      "source": "ablations/output/ablation_results.json#deltas[0].ci_low,ci_high",
+      "source_kind": "ablation_table_row"
+    },
+    {
+      "claim": "Delta A two-tailed paired-bootstrap p-value < 0.0001",
+      "where_used": ["FINAL_REPORT.md#executive-summary", "model_card.md#4.1"],
+      "source": "ablations/output/ablation_results.json#deltas[0].p_value",
+      "source_kind": "ablation_table_row"
+    },
+    {
+      "claim": "Delta B Δ = +0.0187 (null result, p = 0.71)",
+      "where_used": ["FINAL_REPORT.md#delta-b", "model_card.md#4.2", "blog_post#delta-b"],
+      "source": "ablations/output/ablation_results.json#deltas[1]",
+      "source_kind": "ablation_table_row"
+    },
+    {
+      "claim": "Per-task cost delta = +$0.00060 (95 % CI [+$0.00060, +$0.00060])",
+      "where_used": ["FINAL_REPORT.md#cost-per-task", "model_card.md#4.2"],
+      "source": "ablations/output/ablation_results.json#cost_pareto.cost_per_task_usd",
+      "source_kind": "ablation_table_row"
+    },
+    {
+      "claim": "Per-task latency delta = +279 ms",
+      "where_used": ["FINAL_REPORT.md#cost-per-task", "model_card.md#4.2"],
+      "source": "ablations/output/ablation_results.json#cost_pareto.latency_ms_per_task",
+      "source_kind": "ablation_table_row"
+    },
+    {
+      "claim": "Week 10 τ²-Bench retail score = 0.7267 (95 % CI [0.6504, 0.7917])",
+      "where_used": ["audit_memo.md", "FINAL_REPORT.md#delta-c", "model_card.md#4.2"],
+      "source": "../conversion-engine/baseline.md",
+      "source_kind": "week10_artifact"
+    },
+    {
+      "claim": "Inter-rater agreement κ ≥ 0.80 on all four rubric dimensions after rubric revision",
+      "where_used": ["methodology.md#5", "INTERIM_REPORT.md", "blog_post#dataset"],
+      "source": "inter_rater_agreement.md",
+      "source_kind": "repo_artifact"
+    },
+    {
+      "claim": "Contamination check max n-gram Jaccard = 0.142 (threshold 0.20)",
+      "where_used": ["methodology.md#4", "INTERIM_REPORT.md"],
+      "source": "tenacious_bench_v0.1/contamination_check.json#checks.n_gram",
+      "source_kind": "repo_artifact"
+    },
+    {
+      "claim": "Contamination check max embedding cosine = 0.812 (threshold 0.85)",
+      "where_used": ["methodology.md#4", "INTERIM_REPORT.md"],
+      "source": "tenacious_bench_v0.1/contamination_check.json#checks.embedding_similarity",
+      "source_kind": "repo_artifact"
+    },
+    {
+      "claim": "Source-mode mix: trace 27 % / programmatic 30 % / synth 25 % / hand-authored 18 %",
+      "where_used": ["methodology.md#2.2", "datasheet.md", "model_card.md#2"],
+      "source": "tenacious_bench_v0.1/manifest.json#source_modes",
+      "source_kind": "repo_artifact"
+    },
+    {
+      "claim": "Backbone Qwen2.5-1.5B-Instruct, LoRA r = 16",
+      "where_used": ["model_card.md", "training/HYPERPARAMETERS.md", "FINAL_REPORT.md"],
+      "source": "training/adapter/hparams.json",
+      "source_kind": "training_artifact"
+    },
+    {
+      "claim": "Training compute = 0 USD (Colab T4 free)",
+      "where_used": ["FINAL_REPORT.md#cost-per-task", "cost_log.md"],
+      "source": "cost_log.md",
+      "source_kind": "repo_artifact"
+    },
+    {
+      "claim": "Probes cited in audit memo (≥ 8): P007, P008, P012, P013, P014, P015, P016, P017, P023, P024, P025, P031, P032, P034",
+      "where_used": ["audit_memo.md"],
+      "source": "../conversion-engine/eval/probes/",
+      "source_kind": "week10_artifact"
+    },
+    {
+      "claim": "Trace IDs cited in audit memo (≥ 5): tr_dev_baseline_20260423_171204_task07_t2, ...task19_t1, ...task23_t4, ...task41_t3, ...task58_t1",
+      "where_used": ["audit_memo.md", "methodology_rationale.md"],
+      "source": "../conversion-engine/eval/trace_log.jsonl",
+      "source_kind": "week10_artifact"
+    },
+    {
+      "claim": "v0.1.0-interim dataset partitions: train 24 / dev 12 / held-out 8 (44 total)",
+      "where_used": ["README.md#status", "INTERIM_REPORT.md", "datasheet.md"],
+      "source": "tenacious_bench_v0.1/manifest.json#partitions",
+      "source_kind": "repo_artifact"
+    }
+  ]
+}
