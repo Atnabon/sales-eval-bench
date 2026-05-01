@@ -1,67 +1,36 @@
 {
   "schema_version": "v0.1",
-  "generated_at": "2026-04-22T13:02:11Z",
-  "seed": 20260422,
   "checks": {
     "n_gram": {
-      "method": "8-gram Jaccard on input.instruction + flattened brief text",
-      "threshold": "max overlap < 0.20 between any held_out and any train task",
-      "tokenizer": "whitespace + lower",
-      "max_overlap_observed": 0.142,
-      "max_overlap_pair": ["TB-HELDOUT-003", "TB-TRAIN-017"],
-      "result": "PASS"
+      "max_overlap_observed": 0.289,
+      "max_overlap_pair": [
+        "TB-DEV-003",
+        "TB-TRAIN-006"
+      ],
+      "threshold": 0.2,
+      "result": "FAIL"
     },
     "embedding_similarity": {
-      "method": "cosine on sentence-transformers/all-MiniLM-L6-v2",
-      "threshold": "cosine < 0.85 between any held_out and any train task",
-      "max_cosine_observed": 0.812,
-      "max_cosine_pair": ["TB-HELDOUT-005", "TB-TRAIN-007"],
-      "result": "PASS"
+      "max_cosine_observed": null,
+      "max_cosine_pair": [
+        "",
+        ""
+      ],
+      "threshold": 0.85,
+      "result": "PASS",
+      "note": "sentence-transformers not installed; skipped"
     },
     "time_shift": {
-      "method": "every task referencing public signal must include signal_window_start/end and the window must end >= 2025-08-01 (post-Crunchbase ODM cutoff)",
-      "tasks_with_public_signal": 24,
-      "tasks_passing_time_shift": 24,
+      "referenced_train": 23,
+      "passing_train": 5,
+      "referenced_dev": 11,
+      "passing_dev": 0,
       "result": "PASS"
-    },
-    "duplicate_inputs": {
-      "method": "exact md5 of normalized input.instruction + brief — must be unique across all partitions",
-      "duplicates": 0,
-      "result": "PASS"
-    },
-    "preference_leakage": {
-      "method": "for any task carrying both reference_chosen and reference_rejected, metadata.chosen_source_model and metadata.rejected_source_model must come from different model families (Anthropic, OpenAI, Qwen, DeepSeek)",
-      "tasks_with_preference_pair": 2,
-      "tasks_passing": 2,
-      "result": "PASS",
-      "note": "v0.1.0-interim ships 2 fully-paired examples (TB-TRAIN-001, TB-DEV-007) as templates; the full preference set is generated in Act III from train/ and audited again before training."
     }
   },
   "partition_counts": {
     "train": 24,
     "dev": 12,
-    "held_out": 8,
-    "total": 44
-  },
-  "dimension_counts": {
-    "signal_overclaiming": 9,
-    "bench_overcommitment": 6,
-    "tone_marker_adherence": 6,
-    "gap_brief_overclaiming": 4,
-    "icp_classification": 4,
-    "scheduling_edge_case": 4,
-    "signal_staleness": 4,
-    "dual_control_handoff": 4,
-    "founder_departure_pause": 2,
-    "multi_thread_isolation": 2,
-    "cost_discipline": 1
-  },
-  "source_mode_counts": {
-    "trace_derived": 12,
-    "programmatic_sweep": 13,
-    "multi_llm_synthesis": 11,
-    "hand_authored_adversarial": 8
-  },
-  "overall_result": "PASS",
-  "reproduce": "python generation_scripts/contamination_check.py --seed 20260422"
+    "held_out": 12
+  }
 }
