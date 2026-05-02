@@ -52,9 +52,7 @@
 | [model_card.md](model_card.md) | Backbone, hparams, intended use, limitations, eval | Datasheet (model side) |
 | [evidence_graph.json](evidence_graph.json) | Every numeric claim → its source | Evidence-graph integrity |
 | [synthesis_memos/](synthesis_memos/) | 4 common + 2 Path-B memos with disagreement | Path Declaration |
-| [FINAL_REPORT.md](FINAL_REPORT.md) | 2-page CEO/CFO memo (export to PDF for submission) | Final Report submission |
-| [DEMO_VIDEO_SCRIPT.md](DEMO_VIDEO_SCRIPT.md) | 6-minute walkthrough script | Demo Video submission |
-| [INTERIM_REPORT.md](INTERIM_REPORT.md) | Interim PDF source (kept for grading continuity) | n/a |
+
 
 ## Directory structure
 
@@ -63,9 +61,6 @@ sales-eval-bench/
 ├── README.md                          # this file
 ├── LICENSE                            # MIT (code) + CC-BY-4.0 (dataset)
 ├── requirements.txt                   # pinned dependencies
-├── FINAL_REPORT.md                    # 2-page CEO/CFO memo
-├── DEMO_VIDEO_SCRIPT.md               # 6-minute walkthrough script
-├── INTERIM_REPORT.md                  # interim report (kept for continuity)
 ├── audit_memo.md                      # Act I — 600-word audit
 ├── schema.json                        # Tenacious-Bench v0.1 task schema
 ├── style_guide_canonical.md           # Tenacious style guide v2 — banned-phrase canon
@@ -123,7 +118,6 @@ sales-eval-bench/
 │   ├── 04_llm_as_judge_gu_2024.md     # common
 │   ├── 05_simpo_meng_2024.md          # path-B
 │   └── 06_preference_leakage_li_2025.md  # path-B
-└── Technical Challenge/               # provided briefs (style guide v2, challenge spec)
 ```
 
 ## Setup (≤ 5 minutes on a clean macOS / Linux)
