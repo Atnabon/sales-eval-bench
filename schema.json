@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://huggingface.co/datasets/atnabon/tenacious-bench/schema/v0.1.json",
+  "$id": "https://huggingface.co/datasets/bonneyjr/tenacious-bench/schema/v0.1.json",
   "title": "Tenacious-Bench Task Schema v0.1",
   "description": "Machine-verifiable evaluation task for the Tenacious Conversion Engine. Every task is graded by scoring_evaluator.py with no human in the loop.",
   "type": "object",
