@@ -29,11 +29,10 @@
 |---|---|---|
 | HuggingFace dataset | [bonneyjr/tenacious-bench](https://huggingface.co/datasets/bonneyjr/tenacious-bench) | Three partitions, datasheet, license, contamination report |
 | HuggingFace model | [bonneyjr/tenacious-judge-lora-v0.1](https://huggingface.co/bonneyjr/tenacious-judge-lora-v0.1) | LoRA adapter (≈ 65 MB) + model card |
-| Blog post | *(pending publication)* | 1,800-word write-up of the gap, the dataset, the result |
-| Community engagement | *(pending — see [`community_engagement_issue.md`](community_engagement_issue.md))* | Tenacious-specific gap finding posted to the τ²-Bench repo |
+| Blog post | [bonney127016.substack.com](https://bonney127016.substack.com/p/tenacious-bench-v01-five-gaps-bench) | 1,800-word write-up of the gap, the dataset, the result |
+| Community engagement | [sierra-research/tau-bench#84](https://github.com/sierra-research/tau-bench/issues/84) | Tenacious-specific gap finding posted to the τ²-Bench repo |
 
-> Dataset and model card are live. Blog post and community engagement issue are
-> pending publication. The repo is fully reproducible offline today.
+> All four public artifacts are live. The repo is fully reproducible offline today.
 
 ## Final-submission key artifacts
 

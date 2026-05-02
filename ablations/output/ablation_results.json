@@ -14,7 +14,7 @@
       "n_resamples": 10000,
       "statistical_test": "paired_bootstrap_two_tailed",
       "direction": "positive",
-      "holdout_traces_path": "ablations/output/held_out_traces_trained.jsonl",
+      "holdout_traces_path": "/content/drive/MyDrive/sales-eval-bench/ablations/output/held_out_traces_trained.jsonl",
       "extra": {
         "baseline_mean": 0.6347,
         "trained_mean": 0.8535
@@ -31,7 +31,7 @@
       "n_resamples": 10000,
       "statistical_test": "paired_bootstrap_two_tailed",
       "direction": "positive",
-      "holdout_traces_path": "ablations/output/held_out_traces_trained.jsonl",
+      "holdout_traces_path": "/content/drive/MyDrive/sales-eval-bench/ablations/output/held_out_traces_trained.jsonl",
       "extra": {
         "prompted_mean": 0.8347,
         "trained_mean": 0.8535,
@@ -77,5 +77,5 @@
     }
   },
   "n_held_out_tasks_scored": 12,
-  "held_out_partition": "tenacious_bench_v0.1/dev/tasks.jsonl"
+  "held_out_partition": "/content/drive/MyDrive/sales-eval-bench/tenacious_bench_v0.1/dev/tasks.jsonl"
 }
