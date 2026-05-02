@@ -27,14 +27,13 @@
 
 | Artifact | URL | What lives there |
 |---|---|---|
-| HuggingFace dataset | `https://huggingface.co/datasets/atnabon/tenacious-bench` *(placeholder until Day 7 push)* | Three partitions, datasheet, license, contamination report |
-| HuggingFace model | `https://huggingface.co/atnabon/tenacious-judge-lora-v0.1` *(placeholder until Day 7 push)* | LoRA adapter (≈ 65 MB) + model card |
-| Blog post | `https://atnabon.substack.com/p/tenacious-bench` *(placeholder)* | 1,800-word write-up of the gap, the dataset, the result |
-| Community engagement | `https://github.com/sierra-research/tau2-bench/issues/247` *(placeholder)* | Tenacious-specific gap finding posted to the τ²-Bench repo |
+| HuggingFace dataset | [bonneyjr/tenacious-bench](https://huggingface.co/datasets/bonneyjr/tenacious-bench) | Three partitions, datasheet, license, contamination report |
+| HuggingFace model | [bonneyjr/tenacious-judge-lora-v0.1](https://huggingface.co/bonneyjr/tenacious-judge-lora-v0.1) | LoRA adapter (≈ 65 MB) + model card |
+| Blog post | *(pending publication)* | 1,800-word write-up of the gap, the dataset, the result |
+| Community engagement | *(pending — see [`community_engagement_issue.md`](community_engagement_issue.md))* | Tenacious-specific gap finding posted to the τ²-Bench repo |
 
-> Placeholders denote URLs that resolve once the Day-7 publication push completes.
-> The repo is fully reproducible offline today; URLs above are the publication
-> targets, not gating dependencies.
+> Dataset and model card are live. Blog post and community engagement issue are
+> pending publication. The repo is fully reproducible offline today.
 
 ## Final-submission key artifacts
 
@@ -78,6 +77,9 @@ sales-eval-bench/
 ├── model_card.md                      # LoRA adapter card
 ├── cost_log.md                        # every API + compute charge
 ├── evidence_graph.json                # numeric-claim → source map
+├── publish_dataset_to_hf.py           # push dataset to bonneyjr/tenacious-bench
+├── publish_model_card_to_hf.py        # push model card to bonneyjr/tenacious-judge-lora-v0.1
+├── community_engagement_issue.md      # pre-written τ²-Bench GitHub issue body
 ├── evaluator/
 │   └── scoring_evaluator.py           # machine-verifiable scorer
 ├── tenacious_bench_v0.1/
@@ -106,7 +108,8 @@ sales-eval-bench/
 │   ├── preferences_train.jsonl        # 24 pairs (interim) → 120 (final)
 │   └── preferences_dev.jsonl          # 12 pairs (interim) → 72 (final)
 ├── training/
-│   ├── train_simpo.py                 # SimPO + Unsloth LoRA training
+│   ├── train_simpo.py                 # SimPO + Unsloth LoRA training (CPU dry-run)
+│   ├── train_simpo_unsloth.ipynb      # Colab notebook — T4 GPU full training run
 │   ├── HYPERPARAMETERS.md             # justified hparam table
 │   └── adapter/                       # training_run.log, hparams.json, training_loss.csv
 ├── ablations/
@@ -194,11 +197,11 @@ python evaluator/scoring_evaluator.py \
 ## Train the adapter (Colab T4, ≈ 35 min, $0)
 
 The Unsloth notebook at
-[`Technical Challenge/TRP1_week11_unsloth.ipynb`](Technical%20Challenge/TRP1_week11_unsloth.ipynb)
+[`training/train_simpo_unsloth.ipynb`](training/train_simpo_unsloth.ipynb)
 is wired to the preference pairs above. Open it in Colab, mount this repo,
 run all cells. Hyperparameters mirror
 [`training/HYPERPARAMETERS.md`](training/HYPERPARAMETERS.md). The trained
-adapter is pushed to `atnabon/tenacious-judge-lora-v0.1` when
+adapter is pushed to `bonneyjr/tenacious-judge-lora-v0.1` when
 `HUGGINGFACE_TOKEN` is set.
 
 ## License
