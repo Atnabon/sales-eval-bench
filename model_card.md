@@ -185,7 +185,7 @@ print(tokenizer.decode(outputs[0], skip_special_tokens=True))
   title        = {Tenacious-Bench Path B Judge LoRA v0.1},
   year         = {2026},
   publisher    = {HuggingFace},
-  url          = {https://huggingface.co/atnabon/tenacious-judge-lora-v0.1}
+  url          = {https://huggingface.co/bonneyjr/tenacious-judge-lora-v0.1}
 }
 ```
 
